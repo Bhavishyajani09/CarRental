@@ -7,12 +7,19 @@ import CarDetails from "./pages/CarDetails";
 import MyBookings from "./pages/MyBookings";
 import Cars from "./pages/cars";
 import Footer from "./components/Footer";
-
+import Layout from "./pages/Owner/Layout";
+import AddCar from "./pages/Owner/AddCar";
+import ManageCars from "./pages/Owner/ManageCars";
+import ManageBooking from "./pages/Owner/ManageBooking";
+import Dashboard from "./pages/Owner/Dashboard";
+import Login from "./components/Login";
 const App = () => {
   const [showLogin, setShowLogin] = useState(false);
   const isOwnerPath = useLocation().pathname.startsWith("/owner");
   return (
     <>
+      {showLogin && <Login setShowLogin={setShowLogin} />}
+
       {!isOwnerPath && <Navbar setShowLogin={setShowLogin} />}
 
       <Routes>
@@ -20,9 +27,15 @@ const App = () => {
         <Route path="/car-details/:id" element={<CarDetails />} />
         <Route path="/cars" element={<Cars />} />
         <Route path="/my-bookings" element={<MyBookings />} />
+
+        <Route path="/owner" element={<Layout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="add-car" element={<AddCar />} />
+          <Route path="manage-cars" element={<ManageCars />} />
+          <Route path="manage-bookings" element={<ManageBooking />} />
+        </Route>
       </Routes>
-   {!isOwnerPath && 
-       <Footer/>}
+      {!isOwnerPath && <Footer />}
     </>
   );
 };
